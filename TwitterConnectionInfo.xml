@@ -1,0 +1,10 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--Contains configuration information for connecting to the twitter API-->
+<twitter_connection>
+  <sample_stream_url>
+    https://api.twitter.com/2/tweets/sample/stream
+  </sample_stream_url>
+  <bearer_token>
+    PLACE YOUR BEARER TOKEN HERE
+  </bearer_token>
+</twitter_connection>
