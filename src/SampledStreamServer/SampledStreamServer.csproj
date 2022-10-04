@@ -6,11 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
   <ItemGroup>
-    <None Update="TwitterConnectionInfo.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <Content Include="..\..\TwitterConnectionInfo.xml" Link="TwitterConnectionInfo.xml" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
-
 </Project>

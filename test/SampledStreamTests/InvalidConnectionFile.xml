@@ -2,11 +2,11 @@
 <!--Contains configuration information for connecting to the twitter API-->
 <twitter_connection>
   <!--URL to connect to the Twitter v2 Sampled Stream Endpoint-->
-  <sample_stream_url>
+  <invalid_sample_stream_url>
     https://api.twitter.com/2/tweets/sample/stream
-  </sample_stream_url>
+  </invalid_sample_stream_url>
   <!--User's bearer token to connect to twitter-->
-  <bearer_token>
-    PLACE YOUR BEARER TOKEN HERE
-  </bearer_token>
+  <invalid_bearer_token>
+    1234
+  </invalid_bearer_token>
 </twitter_connection>
