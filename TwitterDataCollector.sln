@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterDataCollector", "TwitterDataCollector.csproj", "{7A200559-9934-4D24-8527-CDB81DE3A598}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampledStreamServer", "src\SampledStreamServer\SampledStreamServer.csproj", "{7A200559-9934-4D24-8527-CDB81DE3A598}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampledStreamTests", "test\SampledStreamTests\SampledStreamTests.csproj", "{BB6879EC-5EE7-4322-AEC3-D1BFC428D06E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{7A200559-9934-4D24-8527-CDB81DE3A598}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A200559-9934-4D24-8527-CDB81DE3A598}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A200559-9934-4D24-8527-CDB81DE3A598}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB6879EC-5EE7-4322-AEC3-D1BFC428D06E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB6879EC-5EE7-4322-AEC3-D1BFC428D06E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB6879EC-5EE7-4322-AEC3-D1BFC428D06E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB6879EC-5EE7-4322-AEC3-D1BFC428D06E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -7,6 +7,6 @@
   </sample_stream_url>
   <!--User's bearer token to connect to twitter-->
   <bearer_token>
-    PLACE YOUR BEARER TOKEN HERE
+    1234
   </bearer_token>
 </twitter_connection>
