@@ -13,18 +13,18 @@ const uint consoleReportingIntervalMs = 20000;
 try
 {
     // Read the configuration file to be passed into the Sampled stream endpoint capturer
-    SampledStreamServer.TwitterConfigFile config = new SampledStreamServer.TwitterConfigXml();
+    SampledStreamServer.Models.ITwitterConfigFile config = new SampledStreamServer.Models.TwitterConfigXml();
 
     // Initialize the Sampled Stream Endpoint Capturer
-    SampledStreamServer.TwitterEndpointCapture capturer = new SampledStreamServer.TwitterSampledStreamCapture(config, client);
+    SampledStreamServer.Controllers.ITwitterEndpointCapture capturer = new SampledStreamServer.Controllers.TwitterSampledStreamCapture(config, client);
 
     // Initialize the Sampled Stream Endpoint data processor
-    SampledStreamServer.TwitterEndpointProcessor processor = new SampledStreamServer.TwitterSampledStreamProcessor(capturer.capturedData, new SampledStreamServer.RegexHashtagParser());
+    SampledStreamServer.Controllers.ITwitterEndpointProcessor processor = new SampledStreamServer.Controllers.TwitterSampledStreamProcessor(capturer.capturedData, new SampledStreamServer.Models.RegexHashtagParser());
 
     // Initialize the Data Reporter that will log the captured/processed data to the console
-    SampledStreamServer.DataReporter reporter = new SampledStreamServer.ConsoleReporter();
+    SampledStreamServer.Views.IDataReporter reporter = new SampledStreamServer.Views.ConsoleReporter(processor, consoleReportingIntervalMs);
 
-    await Task.WhenAll(new List<Task> { capturer.ConnectAndCapture(), processor.ProcessCapturedData(), reporter.ReportSampledStreamPeriodically(consoleReportingIntervalMs, processor) });
+    await Task.WhenAll(new List<Task> { capturer.ConnectAndCapture(), processor.ProcessCapturedData(), reporter.ReportSampledStreamPeriodically() });
 }
 catch (Exception ex)
 {

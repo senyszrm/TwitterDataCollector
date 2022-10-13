@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SampledStreamServer
+namespace SampledStreamServer.Models
 {
-    public interface TwitterConfigFile
+    public interface ITwitterConfigFile
     {
         // Contains the URL to the sample stream endpoint obtained from the config file
         public string sampleStreamURL { get; }

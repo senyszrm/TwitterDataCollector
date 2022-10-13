@@ -4,19 +4,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using SampledStreamServer.Controllers;
 
-namespace SampledStreamServer
+namespace SampledStreamServer.Views
 {
-    public class ConsoleReporter : DataReporter
+    public class ConsoleReporter : IDataReporter
     {
         private System.Timers.Timer? sampledStreamReportingTimer;
+        ITwitterEndpointProcessor processor;
+        public uint reportIntervalMs { get; set; }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        ///<param name="processor">The TwitterEndpointProcessor which contains the processed data that will be reported</param>
+        ///<param name="reportIntervalMs">The interval in milliseconds to report to the user</param>
+        ///
+        public ConsoleReporter(ITwitterEndpointProcessor processor, uint reportIntervalMs)
+        {
+            this.processor = processor;
+            this.reportIntervalMs = reportIntervalMs;
+        }
 
         ///<summary>
         /// This function will continuously and periodically report the captured/processed Twitter Sampled Stream data to the user via the console
         ///</summary>
-        ///<param name="reportIntervalMs">The interval in milliseconds to report to the user</param>
-        ///<param name="processor">The TwitterEndpointProcessor which contains the processed data that will be reported</param>
-        public async Task ReportSampledStreamPeriodically(uint reportIntervalMs, TwitterEndpointProcessor processor)
+        public async Task ReportSampledStreamPeriodically()
         {
             await Task.Run(() =>
             {

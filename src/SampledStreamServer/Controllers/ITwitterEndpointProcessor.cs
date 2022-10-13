@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SampledStreamServer
+namespace SampledStreamServer.Controllers
 {
-    public interface TwitterEndpointProcessor
+    public interface ITwitterEndpointProcessor
     {
         // Returns the Top Ten Hashtags encountered during the collection period
         public List<KeyValuePair<string, uint>> topTenHashtags { get; }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SampledStreamServer
+namespace SampledStreamServer.Models
 {
-    public interface HashtagParser
+    public interface IHashtagParser
     {
 
         ///<summary>
