@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using System.Collections.Concurrent;
 using System.Text.Json;
 using System.Timers;
+using SampledStreamServer.Models;
 
-namespace SampledStreamServer
+namespace SampledStreamServer.Controllers
 {
-    public class TwitterSampledStreamProcessor : TwitterEndpointProcessor
+    public class TwitterSampledStreamProcessor : ITwitterEndpointProcessor
     {
         // Keeps track of the data that needs to be processed still (obtained from the endpoint capturer)
         private ConcurrentQueue<string> dataToProcess;
@@ -18,7 +19,7 @@ namespace SampledStreamServer
         private bool processingInProgress = false;
 
         // Reference to which hashtag parser we will use to process hashtags (interface, implementation is provided via constructor)
-        private HashtagParser hashtagParser;
+        private IHashtagParser hashtagParser;
 
         // Stores Hashtag information that is currently being collected this run. Key = Hashtag, Value = Count of times that Hashtag has been encountered
         private Dictionary<string, uint> hashtags = new Dictionary<string, uint>();
@@ -40,7 +41,7 @@ namespace SampledStreamServer
         ///</summary>
         ///<param name="dataToProcess">The captured data that will be processed by this endpoint processor</param>
         ///<param name="parser">The Hashtag parser that will be used to parse hashtags encountered in the captured data</param>
-        public TwitterSampledStreamProcessor(ConcurrentQueue<string> dataToProcess, HashtagParser parser)
+        public TwitterSampledStreamProcessor(ConcurrentQueue<string> dataToProcess, IHashtagParser parser)
         {
             this.dataToProcess = dataToProcess;
             this.hashtagParser = parser;
@@ -67,7 +68,7 @@ namespace SampledStreamServer
                         totalTweets++;
 
                         // Convert the JSON object Tweet into a C# object so that it can be processed
-                        TwitterDataCollector.Tweet? tweet = JsonSerializer.Deserialize<TwitterDataCollector.Tweet>(tweetJsonStr);
+                        Tweet? tweet = JsonSerializer.Deserialize<Tweet>(tweetJsonStr);
 
                         // Match the text portion of the tweet against the Hashtag Regex to find each occurrence of the Hashtag
                         var foundHashtags = hashtagParser.Parse(tweet?.data?.text ?? "");

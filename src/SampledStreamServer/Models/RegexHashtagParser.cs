@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 
-namespace SampledStreamServer
+namespace SampledStreamServer.Models
 {
-    public class RegexHashtagParser : HashtagParser
+    public class RegexHashtagParser : IHashtagParser
     {
         // This Regex is used to match hashtags. Processes alphanumeric Unicode characters so Hashtags from other languages will be present
         private const string HASHTAG_REGEX = @"(#+[\p{L}\p{N}(_)]{1,})";

@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SampledStreamServer.Controllers;
 
-namespace SampledStreamServer
+namespace SampledStreamServer.Views
 {
-    public interface DataReporter
+    public interface IDataReporter
     {
         ///<summary>
         /// This function will continuously and periodically report the captured/processed Twitter Sampled Stream data to the user
         ///</summary>
-        ///<param name="reportIntervalMs">The interval in milliseconds to report to the user</param>
-        ///<param name="processor">The TwitterEndpointProcessor which contains the processed data that will be reported</param>
-        public Task ReportSampledStreamPeriodically(uint reportIntervalMs, TwitterEndpointProcessor processor);
+        public Task ReportSampledStreamPeriodically();
 
         ///<summary>
         /// Stops any currently in progress sampled stream periodic report

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TwitterDataCollector
+namespace SampledStreamServer.Models
 {
     // These classes are used to marshall the JSON data collected from the Twitter API v2 Sampled Stream Endpoint into C# objects
     internal class Tweet

@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Concurrent;
 
-namespace SampledStreamServer
+namespace SampledStreamServer.Controllers
 {
-    public interface TwitterEndpointCapture
+    public interface ITwitterEndpointCapture
     {
         // Contains the unprocessed data captured on this endpoint
         public ConcurrentQueue<string> capturedData { get; }

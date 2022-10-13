@@ -1,4 +1,6 @@
-﻿namespace SampledStreamTests
+﻿using SampledStreamServer.Models;
+
+namespace SampledStreamTests
 {
     public class TwitterConfigXmlTests
     {
@@ -10,14 +12,14 @@
         {
             if (expectedExceptionType != null)
             {
-                Assert.Throws(expectedExceptionType, () => new SampledStreamServer.TwitterConfigXml(configXmlPath), "Expected parsing of the xml file to fail");
+                Assert.Throws(expectedExceptionType, () => new TwitterConfigXml(configXmlPath), "Expected parsing of the xml file to fail");
                 return;
             }
-            Assert.DoesNotThrow(() => new SampledStreamServer.TwitterConfigXml(configXmlPath), "Expected parsing of the xml file to succeed");
+            Assert.DoesNotThrow(() => new TwitterConfigXml(configXmlPath), "Expected parsing of the xml file to succeed");
 
             string expectedStreamURL = expectedOutput[0];
             string expectedBearerToken = expectedOutput[1];
-            SampledStreamServer.TwitterConfigXml twitterConfigXml = new SampledStreamServer.TwitterConfigXml(configXmlPath);
+            TwitterConfigXml twitterConfigXml = new TwitterConfigXml(configXmlPath);
 
             Assert.That(twitterConfigXml.sampleStreamURL, Is.EquivalentTo(expectedStreamURL), "Actual sampled stream URL does not match expected");
             Assert.That(twitterConfigXml.userBearerToken, Is.EquivalentTo(expectedBearerToken), "Actual bearer token does not match expected");

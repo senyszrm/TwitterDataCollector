@@ -1,3 +1,5 @@
+using SampledStreamServer.Models;
+
 namespace SampledStreamTests
 {
     public class RegexParserTests
@@ -10,7 +12,7 @@ namespace SampledStreamTests
         public void RegexParserTest(string input, string[] expectedOutput)
         {
             List<string> expectedOutputList = expectedOutput.ToList();
-            SampledStreamServer.HashtagParser hashtagParser = new SampledStreamServer.RegexHashtagParser();
+            IHashtagParser hashtagParser = new RegexHashtagParser();
             List<string> actualOutput = hashtagParser.Parse(input);
 
             Assert.That(actualOutput, Is.EquivalentTo(expectedOutputList), "Actual hashtag output does not match expected");

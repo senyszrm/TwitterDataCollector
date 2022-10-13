@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http.Headers;
 using System.Collections.Concurrent;
+using SampledStreamServer.Models;
 
-namespace SampledStreamServer
+namespace SampledStreamServer.Controllers
 {
-    public class TwitterSampledStreamCapture : TwitterEndpointCapture
+    public class TwitterSampledStreamCapture : ITwitterEndpointCapture
     {
-        private TwitterConfigFile config;
+        private ITwitterConfigFile config;
         private HttpClient client;
         private bool captureInProgress = false;
 
@@ -22,7 +23,7 @@ namespace SampledStreamServer
         ///</summary>
         ///<param name="config">The configuration file which contains the necessary configuration info to connect to the Twitter endpoint</param>
         ///<param name="client">The HTTP Client that will be used to establish the connection</param>
-        public TwitterSampledStreamCapture(TwitterConfigFile config, HttpClient client)
+        public TwitterSampledStreamCapture(ITwitterConfigFile config, HttpClient client)
         {
             this.config = config;
             this.client = client;
