@@ -15,7 +15,7 @@ namespace SampledStreamServer.Models
         public string userBearerToken { get; private set; } = "";
 
         // Reference to the default location of the configuration XML file
-        private const string DEFAULT_XML_PATH = "TwitterConnectionInfo.xml";
+        private static string DEFAULT_XML_PATH = String.Format("{0}TwitterConnectionInfo.xml", AppContext.BaseDirectory);
 
         // Expected XML Elements for the configuration file
         private const string EXPECTED_STREAM_ELEMENT = "sample_stream_url";
@@ -25,9 +25,9 @@ namespace SampledStreamServer.Models
         ///  Constructor which pulls required information from the provided configuration file
         /// </summary>
         /// <param name="configXmlPath">Path to the configuration XML file to be used</param>
-        public TwitterConfigXml(string configXmlPath = DEFAULT_XML_PATH)
+        public TwitterConfigXml(string configXmlPath = "")
         {
-            XmlTextReader twitterConfigXmlReader = new XmlTextReader(configXmlPath);
+            XmlTextReader twitterConfigXmlReader = new XmlTextReader(configXmlPath == "" ? DEFAULT_XML_PATH : configXmlPath);
 
             // Read the configuration XML file and look for the elements necessary to establish a Twitter connection
             while (twitterConfigXmlReader.Read())

@@ -2,34 +2,48 @@
 // These tweets are then used to provide summary data such as the number of tweets collected and the top 10 hashtags
 // encountered during the collection period.
 
+using SampledStreamServer.Models;
+using SampledStreamServer.Services;
+using SampledStreamServer.Database;
+
 // Allow Unicode in the console so we can see hashtags from other languages
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-// Initialize the HTTP Client. We only expect a single client to be initialized in the entire program
-HttpClient client = new HttpClient();
+string databasePath = String.Format("{0}sampled_stream.db", AppContext.BaseDirectory);
 
-const uint consoleReportingIntervalMs = 20000;
+var builder = WebApplication.CreateBuilder(args);
 
-try
+// Add services to the container.
+builder.Services.AddControllers();
+
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+// Add DI for our service objects
+builder.Services.AddTransient(s => new SampledStreamDbContext(databasePath));
+builder.Services.AddHttpClient();
+builder.Services.AddSingleton<ITwitterConfigFile, TwitterConfigXml>();
+builder.Services.AddSingleton<IHashtagParser, RegexHashtagParser>();
+builder.Services.AddSingleton<ITwitterEndpointCapture, TwitterSampledStreamCapture>();
+builder.Services.AddSingleton<ITwitterEndpointProcessor, TwitterSampledStreamProcessor>();
+
+// Start the background service which captures and processes the sampled stream endpoint data
+builder.Services.AddHostedService<TwitterSampledStreamCaptureAndProcess>();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
 {
-    // Read the configuration file to be passed into the Sampled stream endpoint capturer
-    SampledStreamServer.Models.ITwitterConfigFile config = new SampledStreamServer.Models.TwitterConfigXml();
-
-    // Initialize the Sampled Stream Endpoint Capturer
-    SampledStreamServer.Controllers.ITwitterEndpointCapture capturer = new SampledStreamServer.Controllers.TwitterSampledStreamCapture(config, client);
-
-    // Initialize the Sampled Stream Endpoint data processor
-    SampledStreamServer.Controllers.ITwitterEndpointProcessor processor = new SampledStreamServer.Controllers.TwitterSampledStreamProcessor(capturer.capturedData, new SampledStreamServer.Models.RegexHashtagParser());
-
-    // Initialize the Data Reporter that will log the captured/processed data to the console
-    SampledStreamServer.Views.IDataReporter reporter = new SampledStreamServer.Views.ConsoleReporter(processor, consoleReportingIntervalMs);
-
-    await Task.WhenAll(new List<Task> { capturer.ConnectAndCapture(), processor.ProcessCapturedData(), reporter.ReportSampledStreamPeriodically() });
-}
-catch (Exception ex)
-{
-    Console.WriteLine("Internal Server Error: " + ex.ToString());
-    return -1;
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
-return 0;
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
